@@ -45,8 +45,8 @@ class App extends React.Component {
         <ShoppingCart
           cart={this.state.cart}
           numProducts={this.state.numProducts}
-          totalTax={this.state.totalTax}
-          total={this.state.total}
+          totalTax={this.state.totalTax.toFixed(2)}
+          total={this.state.total.toFixed(2)}
         />
       </div>
     );
