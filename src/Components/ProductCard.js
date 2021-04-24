@@ -8,7 +8,7 @@ const ProductCard = ({ product, addToCart }) => {
       <h6>Price: $00.00{price}</h6>
       <p>{description}</p>
       <img src={img} alt="product photo" />
-      <button onClick={() => addToCart(product)}>Add To Class</button>
+      <button onClick={() => addToCart(product)}>Add To Cart</button>
     </div>
   );
 };

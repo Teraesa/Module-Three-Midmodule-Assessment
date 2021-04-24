@@ -8,27 +8,45 @@ const reducer = (accumulator, product) => {
   return accumulator + product.price;
 };
 
-const numProducts = (cart) => {
+const getTax = (cart) => {
   if (cart.length === 0) return 0;
-  return cart.reduce(reducer, 0) + cart.length;
+  return cart.reduce(reducer, 0) * 0.05;
 };
 
+const total = (cart) => {
+  if (cart.length === 0) return 0;
+  return cart.reduce(reducer, 0);
+};
 class App extends React.Component {
-  state = { cart: [], numProducts: 0 };
-  addToCart = (product) => {
+  state = { cart: [], numProducts: 0, totalTax: 0, total: 0 };
+
+  addToCart = (product, numProducts, totalTax, total) => {
     this.setState({
       cart: [...this.state.cart, product],
-      numProducts: this.state.numProducts + 1,
+      // line below updates subtotal count
+      numProducts: this.state.numProducts + product.price,
+      totalTax: getTax([...this.state.cart, product]),
+      total: this.state.numProducts + this.state.totalTax,
     });
+    console.log("numproduct", this.state.numProducts);
+    console.log("totaltax", this.state.totalTax);
   };
+
   render() {
     return (
       <div className="App">
-        <Products addToCart={this.addToCart} />
+        <Products
+          addToCart={this.addToCart}
+          totalTax={this.state.totalTax}
+          total={this.state.total}
+          numProducts={this.state.numProducts}
+        />
         <CheckoutForm />
         <ShoppingCart
           cart={this.state.cart}
           numProducts={this.state.numProducts}
+          totalTax={this.state.totalTax}
+          total={this.state.total}
         />
       </div>
     );
